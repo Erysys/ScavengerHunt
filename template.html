@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clue Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .clue {
+            font-size: 18px;
+            color: #333;
+            margin: 10px 0;
+        }
+        .error {
+            color: red;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="message" class="error">No clue available.</div>
+        <div id="clue" class="clue" style="display:none"></div>
+    </div>
+
+    <script>
+        // Define the GUIDs and their corresponding clues
+        const cluesMap = {};
+
+        // Function to get the GUID from the URL
+        function getGUIDFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('guid');
+        }
+
+        // Main logic
+        window.onload = function() {
+            const guid = getGUIDFromURL();
+            const messageDiv = document.getElementById("message");
+            const clueDiv = document.getElementById("clue");
+
+            if (guid && cluesMap[guid]) {
+                // Show the corresponding clue
+                clueDiv.textContent = cluesMap[guid];
+                clueDiv.style.display = "block";
+                messageDiv.style.display = "none"; // Hide the error message
+            } else {
+                messageDiv.textContent = "Invalid or missing GUID. Access denied.";
+            }
+        }
+    </script>
+</body>
+</html>
